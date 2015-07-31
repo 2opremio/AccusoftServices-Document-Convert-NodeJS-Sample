@@ -1,0 +1,22 @@
+{
+  "name": "acs-convert-sample",
+  "version": "1.0.0",
+  "description": "Sample code to convert an image using the acs compress api.",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  },
+  "dependencies": {
+    "minimist": "^1.1.1",
+    "request": "^2.59.0"
+  }
+}
