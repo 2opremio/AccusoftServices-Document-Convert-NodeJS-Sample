@@ -1,5 +1,5 @@
 # nodejs document conversion example code
-The following is sample code for converting Microsoft Office document to a PDF using node.js in conjunction with the Accusoft Cloud Services API. It returns the converted document into a PDF, JPEG, TIFF, SVG, or PNG.
+The following is sample code for node.js document conversion with the Accusoft Cloud Services API. It converts a Microsoft Office document and returns the converted document as a PDF, JPEG, TIFF, SVG, or PNG.
 ###Overview
 Build Document Conversion capabilities to your web application quickly using the Accusoft Cloud Services Document Conversion API. Support for converting Microsoft Office, PDF, CAD and other files into raster files such as PNG and JPEG. If you are ready to build Document Conversion into your own application then take a moment to learn more about the [Accusoft Cloud Services Document Conversion API here](https://www.accusoft.com/products/accusoft-cloud-services/overview/).
 ###Installation
