@@ -1,7 +1,7 @@
 # nodejs document conversion example code
-The following is sample code for node.js document conversion with the Accusoft Cloud Services API. It converts a Microsoft Office document and returns the converted document as a PDF, JPEG, TIFF, SVG, or PNG.
+The following is sample code for node.js document conversion with the Accusoft Services API. It converts a Microsoft Office document and returns the converted document as a PDF, JPEG, TIFF, SVG, or PNG.
 ###Overview
-Build Document Conversion capabilities to your web application quickly using the Accusoft Cloud Services Document Conversion API. Support for converting Microsoft Office, PDF, CAD and other files into raster files such as PNG and JPEG. If you are ready to build Document Conversion into your own application then take a moment to learn more about the [Accusoft Cloud Services Document Conversion API here](https://www.accusoft.com/products/accusoft-cloud-services/overview/).
+Build Document Conversion capabilities to your web application quickly using the Accusoft Services Document Conversion API. Support for converting Microsoft Office, PDF, CAD and other files into raster files such as PNG and JPEG. If you are ready to build Document Conversion into your own application then take a moment to learn more about the [Accusoft Services Document Conversion API here](https://www.accusoft.com/products/accusoft-cloud-services/overview/).
 ###Installation
 Download the package and type
 
@@ -35,14 +35,14 @@ This is a fully functioning example to get you started using the document conver
 
 ####Creating a Workfile
 The purpose of a WorkFile is for temporary storage of files on Accusoft servers so they can be shared by various back-end processes that need to act on it.
-The parameter (**inputFilePath**) is sent via a POST to the Accusoft Cloud services api. The api key (**config.apiKey**) is sent as a header. The response will contain the (**fileId** and **affinityToken**) within a JSON object. These values will be needed for calls to the ContentConverters and WorkFile APIs. For more information, see the [Convert work files documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Work%20Files.html).
+The parameter (**inputFilePath**) is sent via a POST to the Accusoft Services api. The api key (**config.apiKey**) is sent as a header. The response will contain the (**fileId** and **affinityToken**) within a JSON object. These values will be needed for calls to the ContentConverters and WorkFile APIs. For more information, see the [Convert work files documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Work%20Files.html).
 ```
 ConversionService.prototype.createWorkFile = function(inputFilePath, callback) {
   if (!inputFilePath) {
     callback(new Error('Missing inputFilePath parameter'));
     return;
   }
-  
+
   if (!callback) {
     callback(new Error('Missing callback parameter'));
     return;
@@ -76,25 +76,25 @@ ConversionService.prototype.createWorkFile = function(inputFilePath, callback) {
 };
 ```
 ####Converting the document
-The document conversion API allows you to convert a document to PDF, JPEG, PNG, SVG, or TIFF. The contents of a JSON object containing the workfile ID (**fileId**) and describing the format to convert the document to (**outputFileType**) are sent via POST to the Accusoft Cloud Services api with the api key (**config.apiKey**) sent as a header. A successful response will include a unique (**processId**) which identifies this conversion process. You will use this processId in subsequent GET calls to get the state and final results of the document conversion operation. For more information, see the [Content Conversion Service documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Content%20Conversion%20Service.html).
+The document conversion API allows you to convert a document to PDF, JPEG, PNG, SVG, or TIFF. The contents of a JSON object containing the workfile ID (**fileId**) and describing the format to convert the document to (**outputFileType**) are sent via POST to the Accusoft Services api with the api key (**config.apiKey**) sent as a header. A successful response will include a unique (**processId**) which identifies this conversion process. You will use this processId in subsequent GET calls to get the state and final results of the document conversion operation. For more information, see the [Content Conversion Service documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Content%20Conversion%20Service.html).
 ```
 ConversionService.prototype.convertDocument = function(workFile, outputFileType, callback) {
   if (!workFile) {
     callback( new Error('Missing workFile parameter'));
     return;
   }
-  
+
   if (!outputFileType) {
     callback( new Error('Missing outputFileType parameter'));
     return;
   }
-  
+
   if (!callback) {
     callback( new Error('Missing callback parameter'));
     return;
   }
-  
-  var input = { 
+
+  var input = {
     input: {
       src: {
         fileId: workFile.fileId
@@ -104,7 +104,7 @@ ConversionService.prototype.convertDocument = function(workFile, outputFileType,
       }
     }
   };
-  
+
   var options = {
     url: 'https://api.accusoft.com/v2/contentConverters',
     json: input,
@@ -113,7 +113,7 @@ ConversionService.prototype.convertDocument = function(workFile, outputFileType,
       'Accusoft-Affinity-Token': workFile.affinityToken
     }
   };
-  
+
   request.post(options, function(error, response, body) {
     if(error) {
       callback(error);
@@ -126,26 +126,26 @@ ConversionService.prototype.convertDocument = function(workFile, outputFileType,
 };
 ```
 ####Getting conversion state
-Gets the state of a document conversion process and its final output if available. The (**processId**) is passed via the URL and the api key (**config.apiKey**) is sent as a header via GET to the Accusoft Cloud Services api. Responses for the request are in a format that's identical to those of POST /v1/contentConverters. Requests can be sent to this URL repeatedly while the response (**state**) is "processing". When the response state is "complete", the output section will include a WorkFile id for the output document(s). You can use the (**fileId**) with the WorkFile API to download the output document(s). For more information, see the [Content Conversion Service documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Content%20Conversion%20Service.html).
+Gets the state of a document conversion process and its final output if available. The (**processId**) is passed via the URL and the api key (**config.apiKey**) is sent as a header via GET to the Accusoft Services api. Responses for the request are in a format that's identical to those of POST /v1/contentConverters. Requests can be sent to this URL repeatedly while the response (**state**) is "processing". When the response state is "complete", the output section will include a WorkFile id for the output document(s). You can use the (**fileId**) with the WorkFile API to download the output document(s). For more information, see the [Content Conversion Service documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Content%20Conversion%20Service.html).
 ```
 ConversionService.prototype.checkConversionState = function(conversionState, workFile, callback) {
   var self = this;
-  
+
   if (!conversionState) {
     callback(new Error('Missing conversionState parameter'));
     return;
   }
-  
+
   if (!workFile) {
     callback(new Error('Missing workFile parameter'));
     return;
   }
-  
+
   if (!callback) {
     callback(new Error('Missing callback parameter'));
     return;
   }
-  
+
   (function checkStatus(info) {
     if(info.state === 'error'){
       callback(new Error('unable to convert file. Code (' + info.errorCode + ')'));
@@ -174,17 +174,17 @@ ConversionService.prototype.getConversionState = function(conversionState, workF
     callback(new Error('Missing conversionState parameter'));
     return;
   }
-  
+
   if (!workFile) {
     callback(new Error('Missing workFile parameter'));
     return;
   }
-  
+
   if (!callback) {
     callback(new Error('Missing callback parameter'));
     return;
   }
-  
+
   var options = {
     url: 'https://api.accusoft.com/v2/contentConverters/' + conversionState.processId,
     headers: {
@@ -192,7 +192,7 @@ ConversionService.prototype.getConversionState = function(conversionState, workF
       'Accusoft-Affinity-Token': workFile.affinityToken
     }
   };
-  
+
   request.get(options, function(error, response, body) {
     if(error) {
       callback(error);
@@ -207,31 +207,31 @@ ConversionService.prototype.getConversionState = function(conversionState, workF
 
 ```
 ####Saving output
-Gets the data associated with an existing WorkFile. The parameter (**workfileId**) is sent via a GET to the Accusoft Cloud services api. The api key (**config.apiKey**) and (**affinityToken**) are sent as a header. The response will contain binary data the will be be written out to the same directory as the (**inputFilePath**). For more information, see the [Work Files Service documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Work%20Files.html).
+Gets the data associated with an existing WorkFile. The parameter (**workfileId**) is sent via a GET to the Accusoft Services api. The api key (**config.apiKey**) and (**affinityToken**) are sent as a header. The response will contain binary data the will be be written out to the same directory as the (**inputFilePath**). For more information, see the [Work Files Service documentation](http://help.accusoft.com/SAAS/pcc-for-acs/webframe.html#Work%20Files.html).
 ```
 ConversionService.prototype.saveOutput = function(conversionState, workFile, inputFilePath, callback) {
   var self = this;
-  
+
   if (!conversionState) {
     callback(new Error('Missing conversionState parameter'));
     return;
   }
-  
+
   if (!workFile) {
     callback( new Error('Missing workFile parameter'));
     return;
   }
-  
+
   if (!inputFilePath) {
     callback( new Error('Missing inputFilePath parameter'));
     return;
   }
-  
+
   if (!callback) {
     callback( new Error('Missing callback parameter'));
     return;
   }
-  
+
   conversionState.output.results.forEach(function(result) {
     var options = {
       url: 'https://api.accusoft.com/PCCIS/V1/WorkFile/' + result.fileId,
@@ -240,7 +240,7 @@ ConversionService.prototype.saveOutput = function(conversionState, workFile, inp
         'Accusoft-Affinity-Token': workFile.affinityToken
       }
     };
-  
+
     request.get(options)
       .on('error', function(error) {
         callback(error);
@@ -250,7 +250,7 @@ ConversionService.prototype.saveOutput = function(conversionState, workFile, inp
           callback(new Error('unable to process conversion'));
         } else {
           var pages = conversionState.output.results.length == 1 ? '': '_' + result.src.pages;
-          var outputFileName = path.basename(inputFilePath, path.extname(inputFilePath)) + 
+          var outputFileName = path.basename(inputFilePath, path.extname(inputFilePath)) +
               pages + '.' + conversionState.input.dest.format;
           var outputFilePath = path.join(path.dirname(inputFilePath), outputFileName);        
 
