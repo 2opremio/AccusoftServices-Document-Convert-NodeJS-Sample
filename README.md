@@ -16,12 +16,14 @@ This code will not function without a valid api key. Please sign up at [www.accu
 ###Usage instructions
 From within the subdirectory where you installed this code example, type
 
-	node app --inputFilePath=<inputFilePath> --outputFileType=<JPEG|PNG|SVG|TIFF|PDF>
+	node app --inputFilePath=<inputFilePath> --outputFileType=<jpeg|png|svg|tiff|pdf>
+	
+Please note that the outputFileType is case sensative.
 
 ###Examples
 Generate a PDF file from a DOCX file.
 
-	node app --inputFilePath=samples/sample5.docx --outputFileType=PDF
+	node app --inputFilePath=samples/sample5.docx --outputFileType=pdf
 
 ###Explanation
 This is a fully functioning example to get you started using the document conversion services. The main calls to the api are within **convert.js**. Here is a brief walkthrough of that file.
