@@ -134,14 +134,15 @@ ConversionService.prototype.checkConversionState = function(conversionState, wor
       callback(new Error('unable to convert file. Code (' + info.errorCode + ')'));
     }
     else if(info.state === 'processing'){
-      setTimeout(
+      setTimeout(function() {
         self.getConversionState(info, workFile, function(err, response) {
           if(err) {
             callback(err);
           } else {
             checkStatus(response);
           }
-        }), 30000);
+        })
+      }, 30000);
     }
     else if(info.state === 'complete') {
       callback(undefined, info);
