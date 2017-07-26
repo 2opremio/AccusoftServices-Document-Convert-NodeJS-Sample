@@ -142,7 +142,7 @@ ConversionService.prototype.checkConversionState = function(conversionState, wor
             checkStatus(response);
           }
         })
-      }, 30000);
+      }, 100);
     }
     else if(info.state === 'complete') {
       callback(undefined, info);
